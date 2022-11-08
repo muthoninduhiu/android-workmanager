@@ -61,16 +61,22 @@ class BlurViewModel(application: Application) : ViewModel() {
         /*var cleanRequest = workerManager
             .beginWith(OneTimeWorkRequest
             .from(CleanUpWorker::class.java))*/
+
         var cleanRequest = workerManager.beginUniqueWork(
             IMAGE_MANIPULATION_WORK_NAME,
             ExistingWorkPolicy.REPLACE,
             OneTimeWorkRequest.from(BlurWorker::class.java)
         )
+        // Create charging constraint
+        val constraints = Constraints.Builder()
+            .setRequiresCharging(true)
+            .build()
 
-        val saveRequest =OneTimeWorkRequest
-            .Builder((SaveImageToFileWorker::class.java))
+        val saveRequest = OneTimeWorkRequestBuilder<SaveImageToFileWorker>()
+            .setConstraints(constraints)
             .addTag(TAG_OUTPUT)
             .build()
+        cleanRequest = cleanRequest.then(saveRequest)
 
        for(i in 0 until blurLevel){
            val blurBuilder = OneTimeWorkRequestBuilder<BlurWorker>()
@@ -79,9 +85,6 @@ class BlurViewModel(application: Application) : ViewModel() {
            }
            cleanRequest = cleanRequest.then(blurBuilder.build())
        }
-        cleanRequest = cleanRequest.then(saveRequest)
-
-
         cleanRequest.enqueue()
     }
 
