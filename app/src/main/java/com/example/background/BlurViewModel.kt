@@ -39,7 +39,7 @@ class BlurViewModel(application: Application) : ViewModel() {
      * Create the WorkRequest to apply the blur and save the resulting image
      * @param blurLevel The amount to blur the image
      */
-    val workerManager = WorkManager.getInstance(application)
+    private val workerManager = WorkManager.getInstance(application)
     internal fun applyBlur(blurLevel: Int) {
         workerManager.enqueue(OneTimeWorkRequest.from(BlurWorker::class.java))
     }
@@ -69,7 +69,7 @@ class BlurViewModel(application: Application) : ViewModel() {
 
     class BlurViewModelFactory(private val application: Application) : ViewModelProvider.Factory {
 
-        override fun <T : ViewModel?> create(modelClass: Class<T>): T {
+        override fun <T : ViewModel> create(modelClass: Class<T>): T {
             return if (modelClass.isAssignableFrom(BlurViewModel::class.java)) {
                 BlurViewModel(application) as T
             } else {
