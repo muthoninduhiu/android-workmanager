@@ -22,6 +22,7 @@ import android.content.Context
 import android.net.Uri
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
+import androidx.work.WorkManager
 
 
 class BlurViewModel(application: Application) : ViewModel() {
@@ -36,6 +37,7 @@ class BlurViewModel(application: Application) : ViewModel() {
      * Create the WorkRequest to apply the blur and save the resulting image
      * @param blurLevel The amount to blur the image
      */
+    val workerManager = WorkManager.getInstance(application)
     internal fun applyBlur(blurLevel: Int) {}
 
     private fun uriOrNull(uriString: String?): Uri? {
