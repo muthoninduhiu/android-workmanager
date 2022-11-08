@@ -21,7 +21,7 @@ class BlurWorker(
         val appContext  = applicationContext
         val resourceUri = inputData.getString(KEY_IMAGE_URI)
         makeStatusNotification("Blurring Image Chill Mama", appContext)
-
+        sleep()
         return try{
            // val picture = decodeResource(appContext.resources,R.drawable.doggo)
             if(TextUtils.isEmpty(resourceUri)){
