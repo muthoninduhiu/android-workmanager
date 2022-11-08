@@ -41,6 +41,9 @@ class BlurViewModel(application: Application) : ViewModel() {
         imageUri = getImageUri(application.applicationContext)
         outputWorkInfo = workerManager.getWorkInfosByTagLiveData(TAG_OUTPUT)
     }
+    internal fun cancelWork() {
+        workerManager.cancelUniqueWork(IMAGE_MANIPULATION_WORK_NAME)
+    }
     private fun createInputDataForUri(): Data {
         val builder = Data.Builder()
 
