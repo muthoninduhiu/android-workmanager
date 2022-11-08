@@ -49,14 +49,12 @@ class BlurViewModel(application: Application) : ViewModel() {
     private fun getImageUri(context: Context): Uri {
         val resources = context.resources
 
-        val imageUri = Uri.Builder()
+        return Uri.Builder()
             .scheme(ContentResolver.SCHEME_ANDROID_RESOURCE)
-            .authority(resources.getResourcePackageName(R.drawable.android_cupcake))
-            .appendPath(resources.getResourceTypeName(R.drawable.android_cupcake))
-            .appendPath(resources.getResourceEntryName(R.drawable.android_cupcake))
+            .authority(resources.getResourcePackageName(R.drawable.doggo))
+            .appendPath(resources.getResourceTypeName(R.drawable.doggo))
+            .appendPath(resources.getResourceEntryName(R.drawable.doggo))
             .build()
-
-        return imageUri
     }
 
     internal fun setOutputUri(outputImageUri: String?) {
