@@ -20,7 +20,7 @@ class BlurWorker(
     override fun doWork(): Result {
         val appContext  = applicationContext
         val resourceUri = inputData.getString(KEY_IMAGE_URI)
-        makeStatusNotification("Blurring Image", appContext)
+        makeStatusNotification("Blurring Image Chill Mama", appContext)
 
         return try{
            // val picture = decodeResource(appContext.resources,R.drawable.doggo)
@@ -28,6 +28,7 @@ class BlurWorker(
                 Log.e(TAG,"Invalid URI")
                 throw IllegalArgumentException("Invalid URI")
             }
+
             val resolver  = appContext.contentResolver
 
             val picture = BitmapFactory.decodeStream(
@@ -40,8 +41,8 @@ class BlurWorker(
 
             val outputData = workDataOf(KEY_IMAGE_URI to outputURI.toString())
 
-            
             Result.success(outputData)
+
         }catch (throwable: Throwable){
             Log.e(TAG, "Error applying blur")
             throwable.printStackTrace()
