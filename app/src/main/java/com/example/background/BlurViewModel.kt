@@ -36,12 +36,13 @@ class BlurViewModel(application: Application) : ViewModel() {
     init {
         imageUri = getImageUri(application.applicationContext)
     }
-    private fun createInputDataForUri(){
+    private fun createInputDataForUri(): Data {
         val builder = Data.Builder()
-        
+
         imageUri?.let {
             builder.putString(KEY_IMAGE_URI, imageUri.toString())
         }
+        return builder.build()
     }
     /**
      * Create the WorkRequest to apply the blur and save the resulting image
