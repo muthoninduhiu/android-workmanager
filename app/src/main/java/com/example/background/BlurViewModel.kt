@@ -60,7 +60,10 @@ class BlurViewModel(application: Application) : ViewModel() {
             OneTimeWorkRequest.from(BlurWorker::class.java)
         )
 
-        val saveRequest =OneTimeWorkRequest.Builder((SaveImageToFileWorker::class.java)).build()
+        val saveRequest =OneTimeWorkRequest
+            .Builder((SaveImageToFileWorker::class.java))
+            .addTag(TAG_OUTPUT)
+            .build()
 
        for(i in 0 until blurLevel){
            val blurBuilder = OneTimeWorkRequestBuilder<BlurWorker>()
