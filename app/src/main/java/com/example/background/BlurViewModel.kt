@@ -23,10 +23,7 @@ import android.graphics.BlurMaskFilter.Blur
 import android.net.Uri
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
-import androidx.work.Data
-import androidx.work.OneTimeWorkRequest
-import androidx.work.OneTimeWorkRequestBuilder
-import androidx.work.WorkManager
+import androidx.work.*
 import com.example.background.workers.BlurWorker
 import com.example.background.workers.CleanUpWorker
 import com.example.background.workers.SaveImageToFileWorker
@@ -54,9 +51,14 @@ class BlurViewModel(application: Application) : ViewModel() {
      */
     private val workerManager = WorkManager.getInstance(application)
     internal fun applyBlur(blurLevel: Int) {
-        var cleanRequest = workerManager
+        /*var cleanRequest = workerManager
             .beginWith(OneTimeWorkRequest
-            .from(CleanUpWorker::class.java))
+            .from(CleanUpWorker::class.java))*/
+        var cleanRequest = workerManager.beginUniqueWork(
+            IMAGE_MANIPULATION_WORK_NAME,
+            ExistingWorkPolicy.REPLACE,
+            OneTimeWorkRequest.from(BlurWorker::class.java)
+        )
 
         val saveRequest =OneTimeWorkRequest.Builder((SaveImageToFileWorker::class.java)).build()
 
