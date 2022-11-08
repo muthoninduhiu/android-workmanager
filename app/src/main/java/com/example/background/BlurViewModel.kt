@@ -21,6 +21,7 @@ import android.content.ContentResolver
 import android.content.Context
 import android.graphics.BlurMaskFilter.Blur
 import android.net.Uri
+import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.work.*
@@ -33,9 +34,12 @@ class BlurViewModel(application: Application) : ViewModel() {
 
     internal var imageUri: Uri? = null
     internal var outputUri: Uri? = null
+    private val workerManager = WorkManager.getInstance(application)
+    internal val outputWorkInfo: LiveData<List<WorkInfo>>
 
-    init {
+    init{
         imageUri = getImageUri(application.applicationContext)
+        outputWorkInfo = workerManager.getWorkInfosByTagLiveData(TAG_OUTPUT)
     }
     private fun createInputDataForUri(): Data {
         val builder = Data.Builder()
@@ -49,7 +53,7 @@ class BlurViewModel(application: Application) : ViewModel() {
      * Create the WorkRequest to apply the blur and save the resulting image
      * @param blurLevel The amount to blur the image
      */
-    private val workerManager = WorkManager.getInstance(application)
+
     internal fun applyBlur(blurLevel: Int) {
         /*var cleanRequest = workerManager
             .beginWith(OneTimeWorkRequest
