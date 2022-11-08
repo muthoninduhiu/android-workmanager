@@ -22,6 +22,7 @@ import android.content.Context
 import android.net.Uri
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
+import androidx.work.Data
 import androidx.work.OneTimeWorkRequest
 import androidx.work.WorkManager
 import com.example.background.workers.BlurWorker
@@ -34,6 +35,9 @@ class BlurViewModel(application: Application) : ViewModel() {
 
     init {
         imageUri = getImageUri(application.applicationContext)
+    }
+    private fun createInputDataForUri(){
+        val builder = Data.Builder()
     }
     /**
      * Create the WorkRequest to apply the blur and save the resulting image
