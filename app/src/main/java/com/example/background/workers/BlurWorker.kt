@@ -14,14 +14,14 @@ class BlurWorker(
     workerParam: WorkerParameters
 ): Worker(context, workerParam) {
     override fun doWork(): Result {
-        val appContext  = applicationContext
-        makeStatusNotification("Blurring Image", appContext)
+        val appcontext  = applicationContext
+        makeStatusNotification("Blurring Image", appcontext)
 
         return try{
-            val picture = decodeResource(appContext.resources,R.drawable.doggo)
-            val output = blurBitmap(picture,appContext)
-            val outputURI = writeBitmapToFile(appContext,output)
-            makeStatusNotification("Output is: $outputURI", appContext)
+            val picture = decodeResource(appcontext.resources,R.drawable.doggo)
+            val output = blurBitmap(picture,appcontext)
+            val outputURI = writeBitmapToFile(appcontext,output)
+            makeStatusNotification("Output is: $outputURI", appcontext)
             
             Result.success()
         }catch (throwable: Throwable){
