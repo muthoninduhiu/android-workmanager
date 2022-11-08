@@ -38,6 +38,10 @@ class BlurViewModel(application: Application) : ViewModel() {
     }
     private fun createInputDataForUri(){
         val builder = Data.Builder()
+        
+        imageUri?.let {
+            builder.putString(KEY_IMAGE_URI, imageUri.toString())
+        }
     }
     /**
      * Create the WorkRequest to apply the blur and save the resulting image
