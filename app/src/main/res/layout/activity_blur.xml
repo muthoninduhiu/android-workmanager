@@ -33,7 +33,7 @@
             android:layout_height="400dp"
             android:contentDescription="@string/description_image"
             android:scaleType="fitCenter"
-            android:src="@drawable/android_cupcake"/>
+            android:src="@drawable/doggo"/>
 
         <TextView
             android:id="@+id/filters_title"
