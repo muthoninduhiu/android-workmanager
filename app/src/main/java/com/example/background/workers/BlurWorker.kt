@@ -2,11 +2,11 @@ package com.example.background.workers
 
 import android.content.ContentValues.TAG
 import android.content.Context
-import android.graphics.BitmapFactory
 import android.graphics.BitmapFactory.decodeResource
 import android.util.Log
 import androidx.work.Worker
 import androidx.work.WorkerParameters
+import com.example.background.KEY_IMAGE_URI
 import com.example.background.R
 
 class BlurWorker(
@@ -14,14 +14,15 @@ class BlurWorker(
     workerParam: WorkerParameters
 ): Worker(context, workerParam) {
     override fun doWork(): Result {
-        val appcontext  = applicationContext
-        makeStatusNotification("Blurring Image", appcontext)
+        val appContext  = applicationContext
+        val resourceId = inputData.getString(KEY_IMAGE_URI)
+        makeStatusNotification("Blurring Image", appContext)
 
         return try{
-            val picture = decodeResource(appcontext.resources,R.drawable.doggo)
-            val output = blurBitmap(picture,appcontext)
-            val outputURI = writeBitmapToFile(appcontext,output)
-            makeStatusNotification("Output is: $outputURI", appcontext)
+            val picture = decodeResource(appContext.resources,R.drawable.doggo)
+            val output = blurBitmap(picture,appContext)
+            val outputURI = writeBitmapToFile(appContext,output)
+            makeStatusNotification("Output is: $outputURI", appContext)
             
             Result.success()
         }catch (throwable: Throwable){
