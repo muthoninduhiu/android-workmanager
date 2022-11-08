@@ -19,11 +19,13 @@ package com.example.background
 import android.app.Application
 import android.content.ContentResolver
 import android.content.Context
+import android.graphics.BlurMaskFilter.Blur
 import android.net.Uri
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.work.Data
 import androidx.work.OneTimeWorkRequest
+import androidx.work.OneTimeWorkRequestBuilder
 import androidx.work.WorkManager
 import com.example.background.workers.BlurWorker
 
@@ -50,7 +52,10 @@ class BlurViewModel(application: Application) : ViewModel() {
      */
     private val workerManager = WorkManager.getInstance(application)
     internal fun applyBlur(blurLevel: Int) {
-        workerManager.enqueue(OneTimeWorkRequest.from(BlurWorker::class.java))
+        val workRequest = OneTimeWorkRequestBuilder<BlurWorker>()
+            .setInputData(createInputDataForUri())
+            .build()
+        workerManager.enqueue(workRequest)
     }
 
     private fun uriOrNull(uriString: String?): Uri? {
